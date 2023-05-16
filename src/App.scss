@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Gotham-font";
+  src: url("static/fonts/GothamSSm-Book_Web.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gotham-font-medium";
+  src: url("static/fonts/GothamSSm-Medium_Web.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "MN-font";
+  src: url("static/fonts/MN.woff2") format("woff2");
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  background-color: #f4f3f1;
+  font-family: "Gotham-font", Arial, Helvetica, sans-serif;
+}
+
+.Gotham-font-medium {
+  font-family: "Gotham-font-medium";
+}
+
+.MN-font {
+  font-family: "MN-font";
+}
