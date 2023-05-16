@@ -8,19 +8,11 @@ import ImageBlock from "components/ImageBlock/ImageBlock";
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from "components/ImageBlock/ImageBlock";
 
 const TRAIN_IMAGES = importAll(
-  require.context(
-    "../../static/images/train_images",
-    false,
-    /\.(png|jpe?g|svg)$/
-  )
+  require.context("../../static/images/train_images", true)
 );
 
 const TEST_IMAGES = importAll(
-  require.context(
-    "../../static/images/train_images",
-    false,
-    /\.(png|jpe?g|svg)$/
-  )
+  require.context("../../static/images/test_images", true)
 );
 
 const IMAGES = [
@@ -33,6 +25,7 @@ const Home = () => {
   const imageLabelSet = getImageLabelSet();
   const [selectedLabel, setSelectedLabel] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
+
   useEffect(() => {
     const data = [];
     parse(csvFile, {
@@ -82,6 +75,7 @@ const Home = () => {
         }
       : null;
   };
+
   return (
     <>
       <section className={styles["title-container"]}>
