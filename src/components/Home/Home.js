@@ -25,6 +25,7 @@ const Home = () => {
   const imageLabelSet = getImageLabelSet();
   const [selectedLabel, setSelectedLabel] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
+  const filteredImages = getFilteredImages();
 
   useEffect(() => {
     const data = [];
@@ -57,7 +58,7 @@ const Home = () => {
     }, new Set());
   }
 
-  const calculateImageLabelPosByURL = (url) => {
+  function calculateImageLabelPosByURL(url) {
     const imageName = parseImageName(url);
     const imageLabelInfo = labelData[imageName];
 
@@ -74,7 +75,19 @@ const Home = () => {
           heightPercent,
         }
       : null;
-  };
+  }
+
+  function getFilteredImages() {
+    return IMAGES.filter(({ url, type }) => {
+      const imageLabelInfo = calculateImageLabelPosByURL(url);
+      const isSelectedLabel =
+        selectedLabel === "all" ||
+        (imageLabelInfo &&
+          imageLabelInfo.label.toLowerCase() === selectedLabel.toLowerCase());
+      const isSelectedType = selectedType === "all" || type === selectedType;
+      return isSelectedLabel && isSelectedType;
+    });
+  }
 
   return (
     <>
@@ -123,29 +136,25 @@ const Home = () => {
       </section>
       <section className="p-4">
         <div className="row">
-          {IMAGES.filter(({ url, type }) => {
-            const imageLabelInfo = calculateImageLabelPosByURL(url);
-            const isSelectedLabel =
-              selectedLabel === "all" ||
-              (imageLabelInfo &&
-                imageLabelInfo.label.toLowerCase() ===
-                  selectedLabel.toLowerCase());
-            const isSelectedType =
-              selectedType === "all" || type === selectedType;
-            return isSelectedLabel && isSelectedType;
-          })
-            .sort((image1, image2) => image1.url.localeCompare(image2.url))
-            .map(({ url, type }, index) => {
-              const imageLabelInfo = calculateImageLabelPosByURL(url);
-              return (
-                <ImageBlock
-                  key={url + type + index}
-                  url={url}
-                  type={type}
-                  imageLabelInfo={imageLabelInfo}
-                />
-              );
-            })}
+          {filteredImages.length > 0 ? (
+            filteredImages
+              .sort((image1, image2) => image1.url.localeCompare(image2.url))
+              .map(({ url, type }, index) => {
+                const imageLabelInfo = calculateImageLabelPosByURL(url);
+                return (
+                  <ImageBlock
+                    key={url + type + index}
+                    url={url}
+                    type={type}
+                    imageLabelInfo={imageLabelInfo}
+                  />
+                );
+              })
+          ) : (
+            <div className="text-center text-secondary h3 mt-5 fst-italic">
+              No Images
+            </div>
+          )}
         </div>
       </section>
     </>
