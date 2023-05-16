@@ -27,3 +27,9 @@
 - Notes:
 
   The app should take no more than three hours to complete, and should minimize the number of external runtime dependencies. If you manage to deliver all required features in a reasonable period, stand out of the crowd with features or UX polish of your choosing.
+
+## How to run code
+
+1. Open your terminal and go into the project direcory
+2. Type 'npm install' in the terminal
+3. Type 'npm start' in the terminal
